@@ -4,9 +4,10 @@ import { validateBody } from "../middlewares/validate-body-middleware";
 import { authSchema } from "../models/auth-schema";
 import { userSchema } from "../models/user-schema";
 
-const authRoutes = Router()
+const authRoutes = Router();
 
-authRoutes.post("/sign-up", validateBody(userSchema), createUser)
-.post("login", validateBody(authSchema), loginUser)
+authRoutes
+ .post("/sign-up", validateBody(userSchema), createUser)
+ .post("login", validateBody(authSchema), loginUser);
 
-export default authRoutes
+export default authRoutes;
