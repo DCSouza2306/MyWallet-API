@@ -41,11 +41,20 @@ async function findById(id: number) {
  });
 }
 
+async function deleteTransaction(id: number) {
+ return prisma.transactions.delete({
+  where: {
+   id,
+  },
+ });
+}
+
 const transactionRepository = {
  createTransaction,
  getAll,
  updateTransaction,
  findById,
+ deleteTransaction,
 };
 
 export default transactionRepository;

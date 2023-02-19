@@ -45,6 +45,31 @@ export async function updateTransaction(
   );
   res.sendStatus(httpStatus.OK);
  } catch (e) {
-  res.sendStatus(httpStatus.NOT_FOUND);
+  if (e.name == "NotFoundError") {
+   return res.sendStatus(httpStatus.NOT_FOUND);
+  }
+
+  if (e.name == "ForbiddenError") {
+   return res.sendStatus(httpStatus.FORBIDDEN);
+  }
+ }
+}
+
+export async function deleteTransaction(
+ req: AutenticateRequest,
+ res: Response
+) {
+ const userId = req.userId;
+ const { transactionId } = req.params;
+ try {
+  await transactionService.deleteTransaction(userId, parseInt(transactionId));
+ } catch (e) {
+  if (e.name == "NotFoundError") {
+   return res.sendStatus(httpStatus.NOT_FOUND);
+  }
+
+  if (e.name == "ForbiddenError") {
+   return res.sendStatus(httpStatus.FORBIDDEN);
+  }
  }
 }

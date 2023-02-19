@@ -35,6 +35,18 @@ async function updateTransaction(
  await transactionRepository.updateTransaction(params, transactionId);
 }
 
+async function deleteTransaction(transactionId: number, userId: number) {
+ await validateUser(userId);
+
+ const transaction = await validateTransaction(transactionId);
+
+ if (transaction.userId != userId) {
+  throw forbiddenError();
+ }
+
+ await transactionRepository.deleteTransaction(transactionId)
+}
+
 async function validateUser(userId: number) {
  const user = await usersRepository.findById(userId);
  if (!user) {
@@ -54,6 +66,7 @@ const transactionService = {
  createTransaction,
  getAll,
  updateTransaction,
+ deleteTransaction,
 };
 
 export type CreateTransactionsParams = {
