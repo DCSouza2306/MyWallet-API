@@ -1,5 +1,5 @@
 import prisma from "../database/database";
-import { CreateUserParams } from "../services/users-service";
+import { CreateUserParams, UpdateUserParams } from "../services/users-service";
 
 async function createUser(user: CreateUserParams) {
  return prisma.users.create({
@@ -7,18 +7,25 @@ async function createUser(user: CreateUserParams) {
  });
 }
 
-async function findUserByEmail(email: string) {
+async function findById(userId: number) {
  return prisma.users.findFirst({
   where: {
-   email,
+   id: userId,
   },
  });
 }
 
+async function updateUser(params: UpdateUserParams, userId: number){
+    return prisma.users.update({
+        where: { id: userId},
+        data: params
+    })
+}
 
 const usersRepository = {
-    findUserByEmail,
-    createUser
-   };
-   
-   export default usersRepository;
+ createUser,
+ findById,
+ updateUser
+};
+
+export default usersRepository;

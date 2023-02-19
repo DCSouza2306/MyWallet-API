@@ -2,16 +2,16 @@ import prisma from "../database/database";
 
 
 
-async function findById(userId: number){
+async function findUserByEmail(email: string) {
     return prisma.users.findFirst({
-        where: {
-            id: userId
-        }
-    })
-}
+     where: {
+      email,
+     },
+    });
+   }
 
 const authRepository = {
- findById
+ findUserByEmail
 };
 
 export default authRepository;

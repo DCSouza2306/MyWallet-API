@@ -1,7 +1,7 @@
 import { notFoundError } from "../errors/not-found-error";
-import authRepository from "../repository/auth-repository";
 import { transactionType } from "@prisma/client";
 import transactionRepository from "../repository/transaction-repository";
+import usersRepository from "../repository/users-repository";
 
 async function createTransaction(params: CreateTransactionsParams, userId: number){
     await validateUser(userId)
@@ -19,7 +19,7 @@ async function getAll(userId: number){
 }
 
 async function validateUser(userId: number){
-    const user = await authRepository.findById(userId);
+    const user = await usersRepository.findById(userId);
     if(!user){
         throw notFoundError()
     }
