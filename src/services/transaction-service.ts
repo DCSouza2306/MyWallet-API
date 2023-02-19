@@ -10,6 +10,14 @@ async function createTransaction(params: CreateTransactionsParams, userId: numbe
 
 }
 
+async function getAll(userId: number){
+    await validateUser(userId)
+
+    const transactions = await transactionRepository.getAll(userId)
+    return transactions
+
+}
+
 async function validateUser(userId: number){
     const user = await authRepository.findById(userId);
     if(!user){
@@ -19,7 +27,8 @@ async function validateUser(userId: number){
 
 
 const transactionService = {
-createTransaction
+createTransaction,
+getAll
 }
 
 

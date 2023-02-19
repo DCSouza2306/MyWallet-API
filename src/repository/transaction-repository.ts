@@ -8,8 +8,24 @@ async function createTransaction(params: CreateTransactionsParams, userId: numbe
     })
 }
 
+async function getAll(userId: number){
+    return prisma.transactions.findMany({
+        where: {
+            id: userId
+        },
+        select: {
+            id: true,
+            value: true,
+            description: true,
+            dateTransaction: true,
+            type: true
+        }
+    })
+}
+
 const transactionRepository = {
-    createTransaction
+    createTransaction,
+    getAll
 }
 
 export default transactionRepository
