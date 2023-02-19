@@ -5,16 +5,6 @@ import { invalideCredentialsError } from "../errors/invalid-credentials-error";
 import jwt from "jsonwebtoken"
 import sessionRepository from "../repository/session-repository";
 
-async function createUser(params: CreateUserParams) {
- await validateUniqueEmail(params.email);
-
- const passwordHash = bcrypt.hashSync(params.password, 10);
-
- const user = { ...params, password: passwordHash };
-
- await authRepository.createUser(user);
-}
-
 async function loginUser(params: InputUserParams){
     const user = await findUserOrFail(params.email)
     await validatePassword(params.password, user.password)
@@ -25,13 +15,6 @@ async function loginUser(params: InputUserParams){
         url_image: user.url_image,
         name: user.name
     }
-}
-
-async function validateUniqueEmail(email: string) {
- const userExist = await authRepository.findUserByEmail(email);
- if (userExist) {
-  throw duplicatedEmail();
- }
 }
 
 async function findUserOrFail(email: string){
@@ -55,16 +38,10 @@ async function createSession(userId: number){
 
 
 const authService = {
- createUser,
  loginUser
 };
 
-export type CreateUserParams = {
- name: string;
- email: string;
- password: string;
- url_image: string;
-};
+
 
 export type InputUserParams = {
     email: string;
