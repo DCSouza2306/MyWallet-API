@@ -6,6 +6,6 @@ import { authSchema } from "../models/auth-schema";
 const authRoutes = Router();
 
 authRoutes
- .post("login", validateBody(authSchema), loginUser);
+ .post("", validateBody(authSchema), loginUser);
 
 export default authRoutes;

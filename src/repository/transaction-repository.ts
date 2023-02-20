@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import prisma from "../database/database";
 import { CreateTransactionsParams } from "../services/transaction-service";
 
@@ -6,14 +7,20 @@ async function createTransaction(
  userId: number
 ) {
  return prisma.transactions.create({
-  data: { ...params, userId },
+  data: { 
+    value: params.value,
+    userId,
+    type: params.type,
+    dateTransaction: params.dateTransaction,
+    description: params.description
+  },
  });
 }
 
 async function getAll(userId: number) {
  return prisma.transactions.findMany({
   where: {
-   id: userId,
+   userId: userId,
   },
   select: {
    id: true,
@@ -31,7 +38,7 @@ async function updateTransaction(
 ) {
  return prisma.transactions.update({
   where: { id: transactionId },
-  data: params,
+  data: {...params, uptadedAt: dayjs().toISOString()},
  });
 }
 

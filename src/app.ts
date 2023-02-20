@@ -8,6 +8,10 @@ loadEnv();
 
 const app = express();
 
-app.use(express.json()).use("/auth", authRoutes).use("/transactions", transactionsRoutes).use("/users", usersRoutes);
+app
+ .use(express.json())
+ .use("/auth", authRoutes)
+ .use("/transactions", transactionsRoutes)
+ .use("/users", usersRoutes);
 
 export default app;

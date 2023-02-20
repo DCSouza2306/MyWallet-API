@@ -3,7 +3,7 @@ import { CreateTransactionsParams } from "../services/transaction-service";
 
 export const transactionSchema = joi.object<CreateTransactionsParams>({
     value: joi.number().required(),
-    type: joi.string().allow("INCOME" || "EXPENSE"),
+    type: joi.string().valid("income", "expense").required(),
     description: joi.string().required(),
-    dateTransaction: joi.date().required()
+    dateTransaction: joi.string().isoDate().required()
 })

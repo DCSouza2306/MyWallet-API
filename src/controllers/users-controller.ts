@@ -8,7 +8,7 @@ export async function createUser(req: Request, res: Response) {
  const user = req.body as CreateUserParams;
  try {
   await usersService.createUser(user);
-  res.status(httpStatus.CREATED);
+  res.sendStatus(httpStatus.CREATED);
  } catch (e) {
   if (e.name == "NotFoundError") {
    return res.sendStatus(httpStatus.NOT_FOUND);

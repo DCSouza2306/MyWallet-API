@@ -13,9 +13,11 @@ export async function createTransaction(
  const userId = req.userId;
 
  try {
+    transaction.dateTransaction = new Date(transaction.dateTransaction)
   await transactionService.createTransaction(transaction, userId);
   res.sendStatus(httpStatus.CREATED);
  } catch (e) {
+    console.log(e)
   res.sendStatus(httpStatus.NOT_FOUND);
  }
 }
@@ -38,6 +40,7 @@ export async function updateTransaction(
  const { transactionId } = req.params;
  const transaction = req.body as CreateTransactionsParams;
  try {
+    transaction.dateTransaction = new Date(transaction.dateTransaction)
   await transactionService.updateTransaction(
    transaction,
    userId,
@@ -52,6 +55,8 @@ export async function updateTransaction(
   if (e.name == "ForbiddenError") {
    return res.sendStatus(httpStatus.FORBIDDEN);
   }
+  console.log(e)
+  res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
  }
 }
 

@@ -21,9 +21,9 @@ model transactions {
   value           Int
   type            transactionType
   description     String
-  dateTransaction DateTime        @db.Date
-  createdAt       DateTime?       @default(now()) @db.Timestamp(6)
-  uptadedAt       DateTime?       @db.Timestamp(6)
+  createdAt       DateTime       @default(now())
+  uptadedAt       DateTime       @updatedAt
+  dateTransaction DateTime        
   users           users           @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
