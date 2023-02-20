@@ -73,3 +73,14 @@ export async function deleteTransaction(
   }
  }
 }
+
+export async function getById(req: AutenticateRequest, res: Response){
+    const userId = req.userId
+    const {transactionId} = req.params
+    try{
+        const transaction = await transactionService.getById(parseInt(transactionId), userId);
+        res.status(httpStatus.OK).send(transaction)
+    } catch(e) {
+        res.sendStatus(httpStatus.NOT_FOUND)
+    }
+}

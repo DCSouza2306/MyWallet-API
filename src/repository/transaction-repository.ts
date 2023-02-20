@@ -49,12 +49,14 @@ async function deleteTransaction(id: number) {
  });
 }
 
+
+
 const transactionRepository = {
  createTransaction,
  getAll,
  updateTransaction,
  findById,
- deleteTransaction,
+ deleteTransaction
 };
 
 export default transactionRepository;
