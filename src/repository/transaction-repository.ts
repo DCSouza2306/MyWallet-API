@@ -2,6 +2,8 @@ import dayjs from "dayjs";
 import prisma from "../database/database";
 import { CreateTransactionsParams } from "../services/transaction-service";
 
+
+
 async function createTransaction(
  params: CreateTransactionsParams,
  userId: number
@@ -12,15 +14,21 @@ async function createTransaction(
     userId,
     type: params.type,
     dateTransaction: params.dateTransaction,
-    description: params.description
+    description: params.description,
+    month: params.dateTransaction.getMonth() + 1,
+    year: params.dateTransaction.getFullYear()
   },
  });
 }
 
-async function getAll(userId: number) {
+async function getAll(userId: number, month: number, year: number) {
  return prisma.transactions.findMany({
   where: {
-   userId: userId,
+    AND:{
+      userId,
+      month,
+      year
+    }
   },
   select: {
    id: true,
@@ -28,9 +36,10 @@ async function getAll(userId: number) {
    description: true,
    dateTransaction: true,
    type: true,
-  },
- });
-}
+  }
+ })
+};
+
 
 async function updateTransaction(
  params: CreateTransactionsParams,

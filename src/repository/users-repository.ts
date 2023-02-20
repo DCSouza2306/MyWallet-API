@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import prisma from "../database/database";
 import { CreateUserParams, UpdateUserParams } from "../services/users-service";
 
@@ -18,7 +19,7 @@ async function findById(userId: number) {
 async function updateUser(params: UpdateUserParams, userId: number){
     return prisma.users.update({
         where: { id: userId},
-        data: params
+        data: {...params, updatedAt: dayjs().toISOString()}
     })
 }
 

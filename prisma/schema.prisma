@@ -21,9 +21,11 @@ model transactions {
   value           Int
   type            transactionType
   description     String
-  createdAt       DateTime       @default(now())
-  uptadedAt       DateTime       @updatedAt
-  dateTransaction DateTime        
+  createdAt       DateTime        @default(now())
+  uptadedAt       DateTime        @updatedAt
+  dateTransaction DateTime
+  month           Int
+  year            Int
   users           users           @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
@@ -34,7 +36,7 @@ model users {
   password     String
   url_image    String         @map("url-image")
   createdAt    DateTime?      @default(now()) @db.Timestamp(6)
-  updatedAt    DateTime?      @db.Timestamp(6)
+  updatedAt    DateTime?      @updatedAt
   sessions     sessions[]
   transactions transactions[]
 }

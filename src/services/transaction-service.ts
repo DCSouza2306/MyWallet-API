@@ -13,10 +13,10 @@ async function createTransaction(
  await transactionRepository.createTransaction(params, userId);
 }
 
-async function getAll(userId: number) {
+async function getAll(userId: number, month: number, year: number) {
  await validateUser(userId);
 
- const transactions = await transactionRepository.getAll(userId);
+ const transactions = await transactionRepository.getAll(userId, month, year);
  return transactions;
 }
 async function updateTransaction(
