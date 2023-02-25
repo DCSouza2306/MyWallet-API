@@ -12,7 +12,7 @@ export async function authenticateToken(
  const authHeader = req.header("Authorization");
  if (!authHeader)
   return res.status(httpStatus.UNAUTHORIZED).send(unauthorizedError());
-
+    
  const token = authHeader.split(" ")[1];
  if (!token)
   return res.status(httpStatus.UNAUTHORIZED).send(unauthorizedError());
@@ -24,13 +24,15 @@ export async function authenticateToken(
    where: { token },
   });
 
-  if (!session)
-   return res.status(httpStatus.UNAUTHORIZED).send(unauthorizedError());
+  if (!session){
+      
+      return res.status(httpStatus.UNAUTHORIZED).send(unauthorizedError());
+  }
 
   req.userId = userId;
   return next();
  } catch (e) {
-  res.status(httpStatus.UNAUTHORIZED).send(unauthorizedError());
+  res.status(httpStatus.UNAUTHORIZED).send(e);
  }
 }
 

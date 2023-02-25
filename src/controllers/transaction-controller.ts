@@ -60,7 +60,6 @@ export async function updateTransaction(
   if (e.name == "ForbiddenError") {
    return res.sendStatus(httpStatus.FORBIDDEN);
   }
-  console.log(e);
   res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
  }
 }
@@ -72,7 +71,8 @@ export async function deleteTransaction(
  const userId = req.userId;
  const { transactionId } = req.params;
  try {
-  await transactionService.deleteTransaction(userId, parseInt(transactionId));
+  await transactionService.deleteTransaction(parseInt(transactionId),userId);
+  res.sendStatus(httpStatus.OK);
  } catch (e) {
   if (e.name == "NotFoundError") {
    return res.sendStatus(httpStatus.NOT_FOUND);

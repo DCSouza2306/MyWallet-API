@@ -36,6 +36,9 @@ async function getAll(userId: number, month: number, year: number) {
    description: true,
    dateTransaction: true,
    type: true,
+  },
+  orderBy: {
+    dateTransaction: "asc"
   }
  })
 };
