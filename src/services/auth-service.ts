@@ -13,7 +13,8 @@ async function loginUser(params: InputUserParams){
     return {
         token,
         url_image: user.url_image,
-        name: user.name
+        name: user.name,
+        email: user.email
     }
 }
 

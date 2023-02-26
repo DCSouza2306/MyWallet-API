@@ -2,21 +2,19 @@ import dayjs from "dayjs";
 import prisma from "../database/database";
 import { CreateTransactionsParams } from "../services/transaction-service";
 
-
-
 async function createTransaction(
  params: CreateTransactionsParams,
  userId: number
 ) {
  return prisma.transactions.create({
-  data: { 
-    value: params.value,
-    userId,
-    type: params.type,
-    dateTransaction: params.dateTransaction,
-    description: params.description,
-    month: params.dateTransaction.getMonth() + 1,
-    year: params.dateTransaction.getFullYear()
+  data: {
+   value: params.value,
+   userId,
+   type: params.type,
+   dateTransaction: params.dateTransaction,
+   description: params.description,
+   month: params.dateTransaction.getMonth() + 1,
+   year: params.dateTransaction.getFullYear(),
   },
  });
 }
@@ -24,11 +22,11 @@ async function createTransaction(
 async function getAll(userId: number, month: number, year: number) {
  return prisma.transactions.findMany({
   where: {
-    AND:{
-      userId,
-      month,
-      year
-    }
+   AND: {
+    userId,
+    month,
+    year,
+   },
   },
   select: {
    id: true,
@@ -38,11 +36,10 @@ async function getAll(userId: number, month: number, year: number) {
    type: true,
   },
   orderBy: {
-    dateTransaction: "asc"
-  }
- })
-};
-
+   dateTransaction: "asc",
+  },
+ });
+}
 
 async function updateTransaction(
  params: CreateTransactionsParams,
@@ -50,7 +47,12 @@ async function updateTransaction(
 ) {
  return prisma.transactions.update({
   where: { id: transactionId },
-  data: {...params, uptadedAt: dayjs().toISOString()},
+  data: {
+   ...params,
+   uptadedAt: dayjs().toISOString(),
+   month: params.dateTransaction.getMonth() + 1,
+   year: params.dateTransaction.getFullYear(),
+  },
  });
 }
 
@@ -68,14 +70,12 @@ async function deleteTransaction(id: number) {
  });
 }
 
-
-
 const transactionRepository = {
  createTransaction,
  getAll,
  updateTransaction,
  findById,
- deleteTransaction
+ deleteTransaction,
 };
 
 export default transactionRepository;

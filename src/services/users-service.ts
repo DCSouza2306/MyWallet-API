@@ -22,10 +22,11 @@ async function updateUser(params: UpdateUserParams, userId: number) {
 
  if (user.email == params.email) {
   delete params.email;
-  await usersRepository.updateUser(params, userId);
+await usersRepository.updateUser(params, userId);
+ 
  } else {
   await validateUniqueEmail(params.email);
-  await usersRepository.updateUser(params, userId);
+await usersRepository.updateUser(params, userId);
  }
 }
 
