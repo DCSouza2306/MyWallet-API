@@ -31,18 +31,3 @@ npm run prisma:seed
 npm run dev
 ```
 
-## How to run tests
-1. Follow the steps in the last section
-1. Configure the `.env.test` file using the `.env.example` file
-1. Run all migrations for tests
-
-```bash
-npm run test:migration:run
-```
-
-3. Run test:
-   (locally)
-
-```bash
-npm run test
-```
